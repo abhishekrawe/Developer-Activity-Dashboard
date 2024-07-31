@@ -2,6 +2,9 @@ import React from 'react';
 import Cards from './Cards/Cards';
 import LineChartComponent from './Charts/LineChart';
 import UserData from './Charts/UserData';
+import PieChartComponets from './Charts/PieChart';
+import BarChartComponent from './Charts/BarChart';
+import DoubleChart from './Charts/DoubleChart';
 
 const Dashboard: React.FC = () => {
     return (
@@ -21,7 +24,12 @@ const Dashboard: React.FC = () => {
                 <LineChartComponent className="line-chart-component" />
                 <UserData className="user-data" />
             </div>
-            <h1>Hello </h1>
+            <div className="chart-wrapper_summary">
+                <PieChartComponets />
+                <BarChartComponent />
+                <DoubleChart/>
+            </div>
+           
         </div>
     );
 };
