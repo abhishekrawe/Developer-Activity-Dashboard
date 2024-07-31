@@ -1,6 +1,6 @@
-// components/UserData.tsx
-
-import React, { useEffect, useReducer, useState } from 'react';
+// components/Charts/UserData.tsx
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Data, Row } from '../../interface/utils/totalCalculation';
 
 interface UserDataProps {
@@ -10,6 +10,7 @@ interface UserDataProps {
 const UserData: React.FC<UserDataProps> = ({ className }) => {
   const [userDetails, setUserDetails] = useState<{ name: string; email: string }[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,7 +54,9 @@ const UserData: React.FC<UserDataProps> = ({ className }) => {
               <p>{user.email}</p>
             </div>
             <div className="user-data__action">
-              <button className="user-data__action-btn">Click</button>
+              <button className="user-data__action-btn" onClick={() => navigate(`/${user.name}`)}>
+                View Details
+              </button>
             </div>
           </div>
         ))}
