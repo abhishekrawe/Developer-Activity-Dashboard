@@ -1,7 +1,7 @@
 // components/UserData.tsx
 
 import React, { useEffect, useReducer, useState } from 'react';
-import { Data, Row } from '../interface/name';
+import { Data, Row } from '../../interface/utils/totalCalculation';
 
 interface UserDataProps {
   className?: string;
@@ -53,7 +53,7 @@ const UserData: React.FC<UserDataProps> = ({ className }) => {
               <p>{user.email}</p>
             </div>
             <div className="user-data__action">
-              <button className="user-data__action-btn">Click Here</button>
+              <button className="user-data__action-btn">Click</button>
             </div>
           </div>
         ))}

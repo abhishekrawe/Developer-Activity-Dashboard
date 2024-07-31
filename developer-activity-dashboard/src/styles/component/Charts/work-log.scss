@@ -1,5 +1,5 @@
-.linechart-wrapper {
-  padding: 25px;
+.total-worklog-wrapper {
+  padding: 15px;
   background-color: #273043;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -8,14 +8,14 @@
   flex: 1 1 calc(25% - 20px);
   margin: 10px;
 
-  .linechart-wrapper__title {
+  .total-worklog-wrapper__title {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     color: var(--neutrals-7);
   }
 
-  .linechart-container {
+  .total-worklog-container {
     margin-top: 50px;
 
     .cartesian-grid {
@@ -25,10 +25,10 @@
   }
 
   @media (max-width: 768px) {
-    .linechart-wrapper__title {
+    .total-worklog-wrapper__title {
       font-size: 16px;
     }
-    .linechart-container {
+    .total-worklog-container {
       margin-top: 50px;
 
       .cartesian-grid {
@@ -39,10 +39,10 @@
   }
 
   @media (max-width: 480px) {
-    .linechart-wrapper__title {
+    .total-worklog-wrapper__title {
       font-size: 14px;
     }
-    .linechart-container {
+    .total-worklog-container {
       margin-top: 50px;
 
       .cartesian-grid {
