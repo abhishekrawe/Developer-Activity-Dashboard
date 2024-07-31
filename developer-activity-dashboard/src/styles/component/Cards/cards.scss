@@ -1,0 +1,27 @@
+.card-wrapper {
+  padding: 25px;
+  background-color: #273043;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  flex: 1 1 calc(25% - 20px);
+  margin: 10px;
+
+  .card-wrapper_details {
+    @include flex-col(flex-start, flex-start);
+    width: 100%;
+    gap: 5px;
+
+    .card-wrapper_details_title {
+      width: 100%;
+      gap: 4px;
+            @include flex-row(flex-start ,center);
+            
+            color: var(--neutrals-9, #f1f0f0);
+    }
+         .card-wrapper_details_description {
+            color: var(--neutrals-7, #a8b2e9);
+         }
+  }
+}

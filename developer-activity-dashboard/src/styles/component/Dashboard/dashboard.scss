@@ -1,0 +1,49 @@
+.dashboard-wrapper {
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #1c212b;
+  color: var(--neutrals-9, #f1f0f0);
+  padding: 20px;
+
+  .card-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .chart-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .line-chart-component {
+      width: 70%;
+      margin: 5px;
+    }
+
+    .user-data {
+      width: 30%;
+      margin: 5px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .dashboard-wrapper {
+    .chart-wrapper {
+      flex-direction: column;
+
+      .line-chart-component,
+      .user-data {
+        width: 100%;
+        margin: 5px 0;
+      }
+    }
+  }
+}
