@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Data, Row } from '../../interface/utils/totalCalculation';
+import { Row } from '../../interface/utils/totalCalculation';
 import { User } from 'iconsax-react';
 import { PiArrowUpRight } from "react-icons/pi";
 
@@ -11,7 +11,7 @@ interface UserDataProps {
 
 const UserData: React.FC<UserDataProps> = ({ rows, className }) => {
   const [userDetails, setUserDetails] = useState<{ name: string; email: string }[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const [error] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {

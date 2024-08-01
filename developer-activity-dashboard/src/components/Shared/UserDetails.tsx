@@ -1,130 +1,89 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import Cards from "../Cards/Cards";
-import BarChartComponent from "../../components/Charts/BarChartComponet";
-import {
-  Data,
-  Row,
-  TotalActivity,
-  DayWiseActivity,
-  DayActivityItem,
-} from "../../interface/utils/totalCalculation";
-import { FaBeer } from "react-icons/fa";
-import PieChartComponent from "../Charts/PieChartComponent";
+import DayWiseActivityChart from "../Charts/DayWiseActivity";
+import DayWisePieChart from "../Charts/DayWisePieChart";
+import DateWiseLineChart from "../Charts/DateWiseLineChart";
+import { useUserData } from "../../hooks/useUserData";
+import { createCardData } from "../../utils/cardUtils";
+import { formatBarChartData, formatAreaChartData } from "../../utils/chartUtils";
 
 const UserDetail: React.FC = () => {
   const { name } = useParams<{ name: string }>();
-  const [userData, setUserData] = useState<Row | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [selectedDate, setSelectedDate] = useState<string>("");
-  const [selectedDayActivity, setSelectedDayActivity] =
-    useState<DayWiseActivity | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/sample-data.json");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const jsonData = (await response.json()) as { data: Data };
-        const user = jsonData.data.AuthorWorklog.rows.find(
-          (row: Row) => row.name.split("@")[0] === name
-        );
-        if (user) {
-          setUserData(user);
-          if (user.dayWiseActivity.length > 0) {
-            setSelectedDate(user.dayWiseActivity[0].date);
-            setSelectedDayActivity(user.dayWiseActivity[0]);
-          }
-        } else {
-          setError("User not found");
-        }
-      } catch (error) {
-        setError("Error fetching the JSON data");
-        console.error("Fetch error:", error);
-      }
-    };
+  if (!name) {
+    return <div>No user name provided</div>;
+  }
 
-    fetchData();
-  }, [name]);
+  const {
+    userData,
+    error,
+    selectedDate,
+    setSelectedDate,
+    selectedDayActivity,
+    setSelectedDayActivity,
+  } = useUserData(name);
+
+  if (error) return <div>{error}</div>;
+  if (!userData) return <div>Loading...</div>;
+
+  const { totalActivity, activeDays, dayWiseActivity } = userData;
+
+  const cardData = [
+    ...totalActivity.map((activity, index) => createCardData(activity, index)),
+    createCardData({ name: "Total Active Days", value: activeDays.days.toString() }, 0),
+  ];
+
+  const barChartData = formatBarChartData(selectedDayActivity);
+  const areaChartData = formatAreaChartData(dayWiseActivity);
 
   const handleDateChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const date = event.target.value;
     setSelectedDate(date);
-    if (userData) {
-      const dayActivity = userData.dayWiseActivity.find(
-        (activity) => activity.date === date
-      );
-      setSelectedDayActivity(dayActivity || null);
-    }
+    setSelectedDayActivity(dayWiseActivity.find(activity => activity.date === date) || null);
   };
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  if (!userData) {
-    return <div>Loading...</div>;
-  }
-
-  const { totalActivity, activeDays } = userData;
-
-  const barChartData = selectedDayActivity
-    ? selectedDayActivity.items.children.map((item: DayActivityItem) => ({
-        name: item.label,
-        count: parseInt(item.count, 10),
-      }))
-    : [];
 
   return (
     <div className="user-details__wrapper">
       <p className="h-md user-detail-name">User : {name}</p>
       <div className="user-details__container">
-        {totalActivity.map((activity: TotalActivity, index: number) => (
+        {cardData.map((card, index) => (
           <Cards
             key={index}
-            title={activity.name}
-            description={activity.value}
-            icon={FaBeer}
-            iconColor="#000"
-            iconBgColor="#ccc"
+            title={card.title}
+            description={card.description}
+            icon={card.icon}
+            iconColor={card.iconColor}
+            iconBgColor={card.iconBgColor}
           />
         ))}
-        <Cards
-          title={"Total Active Days"}
-          description={activeDays.days.toString()}
-          icon={FaBeer}
-          iconColor="#000"
-          iconBgColor="#ccc"
-        />
       </div>
       <div className="user-details__wrapper-chart-section">
         <div className="user-details-chart__container">
           <div className="date-picker__container">
-            <p className="h-md date-picker-title"> Day Wise Activity</p>
+            <p className="h-md date-picker-title">Select Date</p>
             <select
               id="date-picker"
               className="date-picker"
               value={selectedDate}
-              onChange={handleDateChange}>
-              {userData.dayWiseActivity.map(
-                (activity: DayWiseActivity, index: number) => (
-                  <option key={index} value={activity.date}>
-                    {activity.date}
-                  </option>
-                )
-              )}
+              onChange={handleDateChange}
+            >
+              {dayWiseActivity.map((activity, index) => (
+                <option key={index} value={activity.date}>
+                  {activity.date}
+                </option>
+              ))}
             </select>
           </div>
-          <BarChartComponent data={barChartData} />
+          <DayWiseActivityChart data={barChartData} />
         </div>
-        <div className="user-details-chart__contianer-pie">
-        <div className="user-details-chart__contianer-pie_wrapper">
-            <PieChartComponent data={barChartData} />
+        <div className="user-details-chart__container-pie">
+          <DayWisePieChart data={barChartData} />
         </div>
-          
-        </div>
+      </div>
+      <div className="user-details-area-chart">
+        <p className="h-md user-details-area-title">Date Wise Activity</p>
+        <DateWiseLineChart data={areaChartData} />
       </div>
     </div>
   );
