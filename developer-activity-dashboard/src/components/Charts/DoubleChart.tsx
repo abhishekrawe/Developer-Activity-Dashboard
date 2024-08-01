@@ -1,50 +1,47 @@
-import { PieChart, Pie } from "recharts";
+import React from "react";
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
 
-const data01 = [
-    { name: "Group A", value: 400 },
-    { name: "Group B", value: 300 },
-    { name: "Group C", value: 300 },
-    { name: "Group D", value: 200 }
-];
-const data02 = [
-    { name: "A1", value: 100 },
-    { name: "A2", value: 300 },
-    { name: "B1", value: 100 },
-    { name: "B2", value: 80 },
-    { name: "B3", value: 40 },
-    { name: "B4", value: 30 },
-    { name: "B5", value: 50 },
-    { name: "C1", value: 100 },
-    { name: "C2", value: 200 },
-    { name: "D1", value: 150 },
-    { name: "D2", value: 50 }
-];
-
-export default function DoubleChart() {
-    return (
-        <div className="double-chart__wrapper">
-            <PieChart width={400} height={400}>
-                <Pie
-                    data={data01}
-                    dataKey="value"
-                    cx={200}
-                    cy={200}
-                    outerRadius={60}
-                    fill="#8884d8"
-                />
-                <Pie
-                    data={data02}
-                    dataKey="value"
-                    cx={200}
-                    cy={200}
-                    innerRadius={70}
-                    outerRadius={90}
-                    fill="#82ca9d"
-                    label
-                />
-            </PieChart>
-
-        </div>
-      
-    );
+interface DoubleChartProps {
+    data: { name: string; value: number }[];
 }
+
+const DoubleChart: React.FC<DoubleChartProps> = ({ data }) => {
+    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#A4DE6C', '#D0ED57', '#8884d8', '#82ca9d'];
+
+    return (
+        <PieChart width={400} height={400} className="double-chart__wrapper">
+            <Pie
+                data={data}
+                dataKey="value"
+                cx={200}
+                cy={200}
+                outerRadius={60}
+                fill="#8884d8"
+                label
+                labelLine={false}
+            >
+                {data.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+            </Pie>
+            <Pie
+                data={data}
+                dataKey="value"
+                cx={200}
+                cy={200}
+                innerRadius={70}
+                outerRadius={90}
+                fill="#82ca9d"
+                label
+                labelLine={false}
+            >
+                {data.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+            </Pie>
+            <Tooltip />
+        </PieChart>
+    );
+};
+
+export default DoubleChart;

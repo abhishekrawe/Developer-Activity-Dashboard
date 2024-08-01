@@ -4,8 +4,16 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-color: #1c212b;
+  background-color: #1f2937;
   color: var(--neutrals-9, #f1f0f0);
+
+  .dashboard-wrapper-title {
+    padding: 30px 18px;
+    width: 100%;
+    .dashboard-wrapper__title {
+      color: var(--neutrals-9);
+    }
+  }
 
   .card-container {
     width: 100%;
@@ -23,16 +31,32 @@
 
     .total-worklog-component {
       width: 68%;
+      height: auto;
     }
 
     .user-data {
       width: 32%;
+      height: auto;
     }
-   }
+  }
 
-  .chart-wrapper_summary{
+  .chart-wrapper-info {
+    width: 99%;
+    @include flex-row(flex-start, flex-start);
+    gap: 10px;
+    background-color: rgba(31, 41, 55, 0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0px 4px 6px -4px rgba(0, 0, 0, 0.1);
+    border-radius: 0.75rem;
+    border: 1px solid rgba(55, 65, 81, 0.5);
+    margin: 10px;
+  }
+
+  .chart-wrapper_summary {
     width: 100%;
-    @include flex-row(flex-start, center)
+    @include flex-row(flex-start, center);
   }
 }
 
@@ -41,11 +65,19 @@
     .chart-wrapper {
       flex-direction: column;
 
-      .work-log-component,
+      .total-worklog-component {
+        width: 100%;
+        padding: 10px;
+      }
+
       .user-data {
         width: 100%;
         margin: 5px 0;
       }
+    }
+
+    .chart-wrapper-info{
+      margin: 0;
     }
   }
 }

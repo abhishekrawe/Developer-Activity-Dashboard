@@ -1,39 +1,27 @@
-// components/Charts/UserData.tsx
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Data, Row } from '../../interface/utils/totalCalculation';
+import { User } from 'iconsax-react';
+import { PiArrowUpRight } from "react-icons/pi";
 
 interface UserDataProps {
+  rows: Row[];
   className?: string;
 }
 
-const UserData: React.FC<UserDataProps> = ({ className }) => {
+const UserData: React.FC<UserDataProps> = ({ rows, className }) => {
   const [userDetails, setUserDetails] = useState<{ name: string; email: string }[]>([]);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/sample-data.json');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const jsonData = await response.json() as { data: Data };
-        const details = jsonData.data.AuthorWorklog.rows.map((row: Row) => {
-          const email = row.name;
-          const name = email.split('@')[0];
-          return { name, email };
-        });
-        setUserDetails(details);
-      } catch (error) {
-        setError('Error fetching the JSON data');
-        console.error('Fetch error:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
+    const details = rows.map((row: Row) => {
+      const email = row.name;
+      const name = email.split('@')[0];
+      return { name, email };
+    });
+    setUserDetails(details);
+  }, [rows]);
 
   if (error) {
     return <div>{error}</div>;
@@ -49,13 +37,20 @@ const UserData: React.FC<UserDataProps> = ({ className }) => {
         <p className="user-data__wrapper__title h-sm">Active User</p>
         {userDetails.map((user, index) => (
           <div key={index} className="user-data__info">
-            <div className="user-data__details">
-              <p className="h-sm user_name">{user.name}</p>
-              <p>{user.email}</p>
+            <div className='user-data__info-wrapper'>
+              <div className="user-data__avatar">
+                <User size="32" className='user-data__avatar-img' />
+
+              </div>
+              <div className="user-data__details">
+                <p className="h-sm user_name">{user.name}</p>
+                <p className='u-md user_email'>{user.email}</p>
+              </div>
             </div>
+            
             <div className="user-data__action">
               <button className="user-data__action-btn" onClick={() => navigate(`/${user.name}`)}>
-                View Details
+                  View Details <PiArrowUpRight />
               </button>
             </div>
           </div>

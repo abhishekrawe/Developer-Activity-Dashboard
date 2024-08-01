@@ -143,8 +143,6 @@ input[type="number"]::-webkit-outer-spin-button {
 	);
 }
 
-// Util Styles
-
 %base-util {
 	@include base-styles(300, normal, var(--primary-color));
 }

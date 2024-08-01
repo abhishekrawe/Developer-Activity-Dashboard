@@ -37,8 +37,7 @@ const renderCustomizedLabel = ({
 };
 export default function PieChartComponets() {
   return (
-    <div className="pie-chart__wrapper">
-      <PieChart width={400} height={400}>
+    <PieChart width={400} height={400}>
         <Pie
           data={data}
           cx={200}
@@ -54,7 +53,6 @@ export default function PieChartComponets() {
           ))}
         </Pie>
       </PieChart>
-    </div>
    
   );
 }

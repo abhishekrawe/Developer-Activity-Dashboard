@@ -32,6 +32,7 @@ export interface Row {
     totalActivity: TotalActivity[];
     dayWiseActivity: DayWiseActivity[];
     activeDays: ActiveDays;
+    className?: string;
 }
 
 export interface AuthorWorklog {
