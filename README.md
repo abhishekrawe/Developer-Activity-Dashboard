@@ -6,6 +6,10 @@ This project provides a dashboard to visualize developer activity data using Rea
 The dashboard presents metrics such as task completions, PR changes, open PRs, and total PRs. 
 It is designed to be modular, maintainable, and scalable by following best engineering practices.
 
+## 🎊Some Glimpse of the App🎊
+
+https://github.com/user-attachments/assets/9e6a260c-70fe-40a9-a42f-9a26bbdddf62
+
 ## Tech Stack
 
 - **ReactJS**: For building the user interface.
