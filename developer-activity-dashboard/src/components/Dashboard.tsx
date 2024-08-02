@@ -9,10 +9,12 @@ import { fetchData } from '../services/dataService';
 import { transformChartData } from '../utils/chartDataUtils';
 import { cardDetails } from '../constant/cardDetails';
 import InsightCard from './Cards/insightCard';
+import { useSelector } from 'react-redux';
 
 const Dashboard: React.FC = () => {
     const [data, setData] = useState<Data | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const darkMode = useSelector((state: any) => state.theme.darkMode);
 
     useEffect(() => {
         const loadDashboardData = async () => {
@@ -40,9 +42,9 @@ const Dashboard: React.FC = () => {
     const chartData = transformChartData(data.AuthorWorklog.rows);
 
     return (
-        <div className="dashboard-wrapper">
+        <div className={`dashboard-wrapper ${darkMode ? 'dark-mode' : 'light-mode'}`}>
             <div className='dashboard-wrapper-title'>
-                <p className='h-md dashboard-wrapper__title'> Developer Activity </p>
+                <p className='h-md dashboard-wrapper__title'>Developer Activity</p>
             </div>
             <div className="card-container">
                 {cardDetails.map(({ title, color, bgColor, icon, key }) => (
@@ -52,7 +54,8 @@ const Dashboard: React.FC = () => {
                         description={totals[key as keyof Totals].toString()}
                         icon={icon}
                         iconColor={color}
-                        iconBgColor={bgColor} />
+                        iconBgColor={bgColor}
+                    />
                 ))}
             </div>
             <div className="chart-wrapper">
@@ -60,7 +63,7 @@ const Dashboard: React.FC = () => {
                 <UserData className="user-data" rows={data.AuthorWorklog.rows} />
             </div>
             <div className='chart-wrapper-info'>
-                <InsightCard/>
+                <InsightCard />
             </div>
         </div>
     );

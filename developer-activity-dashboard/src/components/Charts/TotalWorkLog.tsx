@@ -9,6 +9,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { useSelector } from 'react-redux';
 
 interface WorkLogComponentProps {
   className?: string;
@@ -16,15 +17,17 @@ interface WorkLogComponentProps {
 }
 
 const TotalWorkLog: React.FC<WorkLogComponentProps> = ({ className, data }) => {
+  const darkMode = useSelector((state: any) => state.theme.darkMode);
+
   return (
-    <div className={`total-worklog-wrapper ${className}`}>
-      <p className="total-worklog-wrapper__title h-sm">
+    <div className={`total-worklog-wrapper ${className} ${darkMode ? 'dark-mode' : 'light-mode'}`}>
+      <p className={`total-worklog-wrapper__title h-sm ${darkMode ? 'dark-mode' : 'light-mode'}`}>
         Total WorkLog
       </p>
-      <div className="total-worklog-container">
+      <div className={`total-worklog-container ${darkMode ? 'dark-mode' : 'light-mode'}`}>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={data} className="work-log">
-            <CartesianGrid strokeDasharray="3 3" className="cartesian-grid" />
+            <CartesianGrid strokeDasharray="3 3" className={`cartesian-grid ${darkMode ? 'dark-mode' : 'light-mode'}`} />
             <XAxis dataKey="name" padding={{ left: 30, right: 30 }} className="x-axis" />
             <YAxis className="y-axis" />
             <Tooltip />
