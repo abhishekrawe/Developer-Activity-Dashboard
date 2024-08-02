@@ -45,7 +45,7 @@ const UserDetail: React.FC = () => {
 
   return (
     <div className="user-details__wrapper">
-      <p className="h-md user-detail-name">User : {name}</p>
+      <p className="h-md user-detail-name">Total Activity by {name}</p>
       <div className="user-details__container">
         {cardData.map((card, index) => (
           <Cards

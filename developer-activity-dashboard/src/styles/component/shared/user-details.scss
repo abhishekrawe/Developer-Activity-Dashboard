@@ -106,6 +106,7 @@
 
         .recharts-wrapper {
           width: 100%;
+          max-height: 328px;
         }
       }
 
@@ -114,6 +115,10 @@
         margin: 0;
       }
     }
+
+         .user-details-area-chart {
+           margin: 0;
+         }
   }
 
   .user-details__container {
