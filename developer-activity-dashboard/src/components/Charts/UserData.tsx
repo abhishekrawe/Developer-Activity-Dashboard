@@ -52,7 +52,7 @@ const UserData: React.FC<UserDataProps> = ({ rows, className }) => {
             </div>
             <div className="user-data__action">
               <button className={`user-data__action-btn ${darkMode ? 'dark-mode' : 'light-mode'}`} onClick={() => navigate(`/${user.name}`)}>
-                View Details <PiArrowUpRight />
+                View <PiArrowUpRight />
               </button>
             </div>
           </div>
