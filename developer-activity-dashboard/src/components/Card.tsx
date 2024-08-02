@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Data } from '../interface/components/Card';
+import { getUserData } from '../services/userService';
+import { Row } from '../interface/utils/totalCalculation';
 
-const Card: React.FC = () => {
-  const [data, setData] = useState<Data | null>(null);
+const Card: React.FC<{ name: string }> = ({ name }) => {
+  const [data, setData] = useState<Row | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/sample-data.json');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const jsonData = await response.json() as { data: Data };
-        setData(jsonData.data);
+        const userData = await getUserData(name);
+        setData(userData);
       } catch (error) {
         setError('Error fetching the JSON data');
         console.error('Fetch error:', error);
@@ -21,7 +18,7 @@ const Card: React.FC = () => {
     };
 
     fetchData();
-  }, []);
+  }, [name]);
 
   if (error) {
     return <div>{error}</div>;
@@ -33,41 +30,39 @@ const Card: React.FC = () => {
 
   return (
     <div>
-      {data.AuthorWorklog.rows.length > 0 ? (
-        data.AuthorWorklog.rows.map((row, index) => (
-          <div key={index}>
-            <h2>{row.name}</h2>
-            <h3>Total Activity</h3>
-            <ul>
-              {row.totalActivity.map((activity, idx) => (
-                <li key={idx}>
-                  {activity.name}: {activity.value}
-                </li>
-              ))}
-            </ul>
-            <h3>Day Wise Activity</h3>
-            <div>
-              {row.dayWiseActivity.map((dayActivity, idx) => (
-                <div key={idx}>
-                  <h4>Date: {dayActivity.date}</h4>
-                  <ul>
-                    {dayActivity.items.children.map((item, i) => (
-                      <li key={i} style={{ color: item.fillColor }}>
-                        {item.label}: {item.count}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-            <h3>Active Days</h3>
-            <div>
-              <p>Days Active: {row.activeDays.days}</p>
-              <p>Burnout Status: {row.activeDays.isBurnOut ? 'Burnout' : 'No Burnout'}</p>
-              <p>Insights: {row.activeDays.insight.join(', ')}</p>
-            </div>
+      {data ? (
+        <>
+          <h2>{data.name}</h2>
+          <h3>Total Activity</h3>
+          <ul>
+            {data.totalActivity.map((activity, idx) => (
+              <li key={idx}>
+                {activity.name}: {activity.value}
+              </li>
+            ))}
+          </ul>
+          <h3>Day Wise Activity</h3>
+          <div>
+            {data.dayWiseActivity.map((dayActivity, idx) => (
+              <div key={idx}>
+                <h4>Date: {dayActivity.date}</h4>
+                <ul>
+                  {dayActivity.items.children.map((item, i) => (
+                    <li key={i} style={{ color: item.fillColor }}>
+                      {item.label}: {item.count}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-        ))
+          <h3>Active Days</h3>
+          <div>
+            <p>Days Active: {data.activeDays.days}</p>
+            <p>Burnout Status: {data.activeDays.isBurnOut ? 'Burnout' : 'No Burnout'}</p>
+            <p>Insights: {data.activeDays.insight.join(', ')}</p>
+          </div>
+        </>
       ) : (
         <div>No data available</div>
       )}

@@ -1,7 +1,7 @@
 .userdata-wrapper {
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
   height: auto;
   padding: 15px;
@@ -9,8 +9,6 @@
   background-color: rgba(31, 41, 55, 0.5); 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(8px);
-  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0px 4px 6px -4px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   border: 1px solid rgba(55, 65, 81, 0.5);
   text-align: center;
@@ -18,7 +16,7 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 
   &.light-mode {
-    background-color: white; 
+    background-color: white;
     border: 1px solid rgba(200, 200, 200, 0.5);
   }
 
@@ -34,7 +32,7 @@
       transition: color 0.3s ease;
 
       &.light-mode {
-        color: rgba(56, 64, 71, 1); 
+        color: rgba(56, 64, 71, 1);
       }
     }
 
@@ -47,60 +45,66 @@
       border-radius: 18px;
       box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1),
         0px 4px 6px -4px rgba(0, 0, 0, 0.1);
-      border-radius: 0.75rem;
       padding: 12px;
+      flex-wrap: wrap;
       transition: background-color 0.3s ease;
 
       &.light-mode {
-        background-color: rgba(248, 250, 252, 1); 
+        background-color: rgba(248, 250, 252, 1);
+      }
+    }
+
+    .user-data__info-wrapper {
+      display: flex;
+      align-items: flex-start;
+      flex-grow: 1;
+    }
+
+    .user-data__details {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+
+      .user_name {
+        color: var(--neutrals-7);
+        transition: color 0.3s ease;
+
+        &.light-mode {
+          color: rgba(56, 64, 71, 1);
+        }
       }
 
-      .user-data__info-wrapper {
-        @include flex-row(flex-start, flex-start);
-      }
+      .user_email {
+        color: var(--neutrals-4);
+        transition: color 0.3s ease;
 
-      .user-data__details {
+        &.light-mode {
+          color: rgba(156, 163, 175, 1);
+        }
+      }
+    }
+
+    .user-data__action {
+      flex-shrink: 0;
+
+      .user-data__action-btn {
+        width: auto;
+        background-color: var(--primary-4);
         display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+        justify-content: center;
+        align-items: center;
         gap: 4px;
+        padding: 12px;
+        border: 1px solid #202533;
+        border-radius: 12px;
+        color: var(--neutrals-7);
+        transition: background-color 0.3s ease, color 0.3s ease;
 
-        .user_name {
-          color: var(--neutrals-7);
-          transition: color 0.3s ease;
-
-          &.light-mode {
-            color: rgba(56, 64, 71, 1);
-          }
-        }
-
-        .user_email {
-          color: var(--neutrals-4);
-          transition: color 0.3s ease;
-
-          &.light-mode {
-            color: rgba(156, 163, 175, 1); 
-          }
-        }
-      }
-
-      .user-data__action {
-        .user-data__action-btn {
-          width: 100%;
+        &.light-mode {
           background-color: var(--primary-6);
-          @include flex-row(center, center);
-          gap: 4px;
-          padding: 12px;
-          border: 1px solid #202533;
-          border-radius: 12px;
-          color: var(--neutrals-7);
-          transition: background-color 0.3s ease, color 0.3s ease;
-
-          &.light-mode {
-            background-color: var(--primary-6); 
-            border: 1px solid rgba(200, 200, 200, 0.5);
-            color: white
-          }
+          border: 1px solid rgba(200, 200, 200, 0.5);
+          color: white;
         }
       }
     }
@@ -114,11 +118,11 @@
       border-radius: 50%;
       margin-right: 10px;
       color: var(--neutrals-7);
-      background-color: var(--primary-6);
+      background-color: var(--primary-4);
       transition: background-color 0.3s ease;
 
       &.light-mode {
-        background-color: var(--primary-6); 
+        background-color: var(--primary-6);
       }
     }
   }
@@ -126,8 +130,6 @@
 
 @media screen and (max-width: 768px) {
   .userdata-wrapper {
-    flex-direction: column;
-    align-items: center;
     padding: 15px;
 
     .user-data__wrapper__info {

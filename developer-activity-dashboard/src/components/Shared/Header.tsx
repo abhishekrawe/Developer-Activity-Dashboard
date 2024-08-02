@@ -14,7 +14,7 @@ const Header: React.FC = () => {
     return (
         <header className={`header ${darkMode ? 'dark-mode' : 'light-mode'}`}>
             <div className="logo">
-               <h1 className='logo-icon'> D </h1>
+               <img className='logo-icon' src='./logo.jpeg'/>
                <p> DevTracker </p>
             </div>
             <button className="mode-toggle" onClick={handleToggleMode}>
