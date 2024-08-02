@@ -11,6 +11,7 @@ import { cardDetails } from '../constant/cardDetails';
 import InsightCard from './Cards/insightCard';
 import { useSelector } from 'react-redux';
 import Header from './Shared/Header';
+import Loading from './Shared/Loading';
 
 const Dashboard: React.FC = () => {
     const [data, setData] = useState<Data | null>(null);
@@ -36,7 +37,7 @@ const Dashboard: React.FC = () => {
     }
 
     if (!data) {
-        return <div>Loading...</div>;
+        return <Loading/>
     }
 
     const totals: Totals = calculateTotals(data);

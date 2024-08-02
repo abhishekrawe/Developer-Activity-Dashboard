@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getUserData } from '../services/userService';
 import { Row } from '../interface/utils/totalCalculation';
+import Loading from './Shared/Loading';
 
 const Card: React.FC<{ name: string }> = ({ name }) => {
   const [data, setData] = useState<Row | null>(null);
@@ -25,7 +26,7 @@ const Card: React.FC<{ name: string }> = ({ name }) => {
   }
 
   if (!data) {
-    return <div>Loading...</div>;
+    return <div><Loading/></div>;
   }
 
   return (

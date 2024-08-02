@@ -48,7 +48,7 @@
     width: 100%;
     display: flex;
     justify-content: flex-start;
-    align-items: center;
+    align-items: stretch;
 
     .total-worklog-component {
       width: 73%;
@@ -84,7 +84,7 @@
 
       .total-worklog-component {
         width: 100%;
-        padding: 10px;
+        margin: 0;
       }
 
       .user-data {

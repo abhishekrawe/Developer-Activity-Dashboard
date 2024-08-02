@@ -7,6 +7,7 @@ import DateWiseLineChart from "../Charts/DateWiseLineChart";
 import { useUserData } from "../../hooks/useUserData";
 import { createCardData } from "../../utils/cardUtils";
 import { formatBarChartData, formatAreaChartData } from "../../utils/chartUtils";
+import Loading from "./Loading";
 
 const UserDetail: React.FC = () => {
   const { name } = useParams<{ name: string }>();
@@ -25,7 +26,7 @@ const UserDetail: React.FC = () => {
   } = useUserData(name);
 
   if (error) return <div>{error}</div>;
-  if (!userData) return <div>Loading...</div>;
+  if (!userData) return <div><Loading/></div>;
 
   const { totalActivity, activeDays, dayWiseActivity } = userData;
 
