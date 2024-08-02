@@ -10,6 +10,7 @@ import { transformChartData } from '../utils/chartDataUtils';
 import { cardDetails } from '../constant/cardDetails';
 import InsightCard from './Cards/insightCard';
 import { useSelector } from 'react-redux';
+import Header from './Shared/Header';
 
 const Dashboard: React.FC = () => {
     const [data, setData] = useState<Data | null>(null);
@@ -42,30 +43,34 @@ const Dashboard: React.FC = () => {
     const chartData = transformChartData(data.AuthorWorklog.rows);
 
     return (
-        <div className={`dashboard-wrapper ${darkMode ? 'dark-mode' : 'light-mode'}`}>
-            <div className='dashboard-wrapper-title'>
-                <p className='h-md dashboard-wrapper__title'>Developer Activity</p>
+        <>
+            <Header />
+            <div className={`dashboard-wrapper ${darkMode ? 'dark-mode' : 'light-mode'}`}>
+                <div className='dashboard-wrapper-title'>
+                    <p className='h-md dashboard-wrapper__title'>Developer Activity</p>
+                </div>
+                <div className="card-container">
+                    {cardDetails.map(({ title, color, bgColor, icon, key }) => (
+                        <Cards
+                            key={title}
+                            title={title}
+                            description={totals[key as keyof Totals].toString()}
+                            icon={icon}
+                            iconColor={color}
+                            iconBgColor={bgColor}
+                        />
+                    ))}
+                </div>
+                <div className="chart-wrapper">
+                    <TotalWorkLog className="total-worklog-component" data={chartData} />
+                    <UserData className="user-data" rows={data.AuthorWorklog.rows} />
+                </div>
+                <div className='chart-wrapper-info'>
+                    <InsightCard />
+                </div>
             </div>
-            <div className="card-container">
-                {cardDetails.map(({ title, color, bgColor, icon, key }) => (
-                    <Cards
-                        key={title}
-                        title={title}
-                        description={totals[key as keyof Totals].toString()}
-                        icon={icon}
-                        iconColor={color}
-                        iconBgColor={bgColor}
-                    />
-                ))}
-            </div>
-            <div className="chart-wrapper">
-                <TotalWorkLog className="total-worklog-component" data={chartData} />
-                <UserData className="user-data" rows={data.AuthorWorklog.rows} />
-            </div>
-            <div className='chart-wrapper-info'>
-                <InsightCard />
-            </div>
-        </div>
+        </>
+        
     );
 };
 

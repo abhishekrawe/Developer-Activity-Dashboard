@@ -22,7 +22,7 @@
 
     .dashboard-wrapper-title {
       .dashboard-wrapper__title {
-        color: var(--neutrals-1); // Light mode title color
+        color: var(--neutrals-1); 
       }
     }
   }
@@ -32,7 +32,7 @@
     width: 100%;
 
     .dashboard-wrapper__title {
-      color: var(--neutrals-9); // Default color, updated by theme
+      color: var(--neutrals-9); 
     }
   }
 
@@ -65,7 +65,7 @@
     width: 99%;
     @include flex-row(flex-start, flex-start);
     gap: 10px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); // Darker shadow with increased spread
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);  
     backdrop-filter: blur(8px);
     border-radius: 20px;
     margin: 10px;
